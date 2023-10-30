@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-export default function PageNotFound() {
+export function PageNotFound() {
   const navigation = useNavigate();
   return (
     <div>

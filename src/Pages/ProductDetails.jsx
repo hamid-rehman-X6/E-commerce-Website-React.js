@@ -2,15 +2,26 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  incrementQuantity,
+  decrementQuantity,
+  addToCart,
+} from "../Redux/Cart-Redux/cartAction";
 
-export default function ProductDetails() {
+export function ProductDetails() {
   const params = useParams();
   const id = params.id;
   const [product, setProduct] = useState([]);
   const [quantity, setQuantity] = useState(1);
   const navigation = useNavigate();
+  const dispatch = useDispatch();
+
+  const quantity1 = useSelector((state) => state.quantities);
+  console.log(quantity1);
 
   useEffect(() => {
+    window.scroll(0, 0);
     const fetchData = async () => {
       try {
         const response = await axios.get(
@@ -26,32 +37,21 @@ export default function ProductDetails() {
   }, [id]);
 
   const handleIncrement = () => {
+    dispatch(incrementQuantity());
     setQuantity(quantity + 1);
   };
   const handleDecrement = () => {
+    dispatch(decrementQuantity());
     if (quantity > 1) {
       setQuantity(quantity - 1);
     }
   };
 
-  const handleAddtocart = () => {
-    const confirmText = window.prompt(
-      "Type 'YES' to confirm the order or 'NO' to cancel:"
-    );
-
-    if (confirmText) {
-      if (confirmText.toUpperCase() === "YES") {
-        alert("Your order is confirmed");
-        navigation("/cart");
-      } else if (confirmText.toUpperCase() === "NO") {
-        alert("Order not confirmed.");
-        navigation(-1);
-      } else {
-        alert("Invalid input. Please type 'YES' or 'NO'.");
-        navigation(0);
-      }
-    }
+  const handleAddToCart = () => {
+    dispatch(addToCart(product));
+    navigation("/cart");
   };
+
   return (
     <>
       <div className="PD-main-div">
@@ -79,11 +79,10 @@ export default function ProductDetails() {
         <button className="plus-btn" onClick={handleIncrement}>
           +
         </button>
-        <Link to="/cart">
-          <button className="Addtocart-btn" onClick={handleAddtocart}>
-            Add to Cart
-          </button>
-        </Link>
+
+        <button className="Addtocart-btn" onClick={handleAddToCart}>
+          Add to Cart
+        </button>
       </div>
 
       <div className="Terms-conditions">

@@ -1,25 +1,48 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-
-export default function Products() {
+import { useParams } from "react-router-dom";
+export function Products() {
   const [sorted, setSorted] = useState([]);
   const [search, setSearch] = useState("");
   const [product, setProduct] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`https://fakestoreapi.com/products`);
-        console.log(response.data);
-        setProduct(response.data);
-        setSorted(response.data);
-      } catch (error) {
-        console.log("Error Detecting While Fetching Api Data", error);
-      }
-    };
-    fetchData();
-  }, []);
+  const param = useParams();
+  console.log(param.category);
+  if (!param.category) {
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const response = await axios.get(`https://fakestoreapi.com/products`);
+          console.log(response.data);
+          setProduct(response.data);
+          setSorted(response.data);
+          setLoading(false);
+        } catch (error) {
+          console.log("Error Detecting While Fetching Api Data", error);
+        }
+      };
+      fetchData();
+    }, []);
+  } else {
+    useEffect(() => {
+      const categoryData = async () => {
+        try {
+          const response = await axios.get(
+            `https://fakestoreapi.com/products/category/${param.category}`
+          );
+          console.log(response.data);
+          setProduct(response.data);
+          setSorted(response.data);
+          setLoading(false);
+        } catch (error) {
+          console.log("Error Detecting While Fetching Api Data", error);
+        }
+      };
+      categoryData();
+    }, []);
+  }
 
   const filteredData = product.filter((items) => {
     return items.title.toLowerCase().includes(search.toLowerCase().trim());
@@ -38,6 +61,20 @@ export default function Products() {
     console.log(sortedData);
   };
 
+  const handleLowToHigh = () => {
+    const sortedData = [...product];
+    sortedData.sort((a, b) => a.price - b.price);
+    setProduct(sortedData);
+    console.log(sortedData);
+  };
+
+  const handleHighToLow = () => {
+    const sortedData = [...product];
+    sortedData.reverse((a, b) => a.price - b.price);
+    setProduct(sortedData);
+    console.log(sortedData);
+  };
+
   return (
     <>
       <span className="searching-text">
@@ -50,14 +87,36 @@ export default function Products() {
         />
       </span>
 
-      <button className="Sorting-btn" onClick={handlesorting}>
-        Sort A to Z
-      </button>
+      <div className="pricebtn-sorting">
+        <button className="low-high" onClick={handleLowToHigh}>
+          Price Low To High
+        </button>
+        <button className="Sorting-btn" onClick={handlesorting}>
+          Sort A to Z
+        </button>
 
-      <h2 className="Feature-p">Featured Products</h2>
-      <button className="ReverseSort-btn" onClick={handleReverse}>
-        Sort Z to A
-      </button>
+        <button className="high-low" onClick={handleHighToLow}>
+          Price High To Low
+        </button>
+        <button className="ReverseSort-btn" onClick={handleReverse}>
+          Sort Z to A
+        </button>
+      </div>
+
+      {loading ? (
+        <p
+          style={{
+            marginLeft: "50px",
+            fontSize: "28px",
+            fontWeight: "bolder",
+            color: "darkred",
+          }}
+        >
+          Loading Products, please wait....
+        </p>
+      ) : (
+        <h2 className="Feature-p">Featured Products</h2>
+      )}
 
       <div className="P-main-div">
         {filteredData.map((e, index) => (

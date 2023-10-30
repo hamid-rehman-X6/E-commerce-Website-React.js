@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function ContactToHR() {
+export function ContactToHR() {
   return (
     <>
       <div className="hr-ceo-div">
