@@ -6,9 +6,9 @@ export const decrementQuantity = () => ({
   type: "DECREMENT_QUANTITY",
 });
 
-export const addToCart = (product) => ({
+export const addToCart = (product, quantity) => ({
   type: "ADD_TO_CART",
-  payload: product,
+  payload: { item: product, quantities: quantity },
 });
 
 export const removefromCart = () => ({

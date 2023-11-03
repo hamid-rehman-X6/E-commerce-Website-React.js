@@ -13,12 +13,11 @@ export function ProductDetails() {
   const params = useParams();
   const id = params.id;
   const [product, setProduct] = useState([]);
-  const [quantity, setQuantity] = useState(1);
+  // const [quantity, setQuantity] = useState();
+  const quantity = useSelector((state) => state.quantities);
+
   const navigation = useNavigate();
   const dispatch = useDispatch();
-
-  const quantity1 = useSelector((state) => state.quantities);
-  console.log(quantity1);
 
   useEffect(() => {
     window.scroll(0, 0);
@@ -38,17 +37,13 @@ export function ProductDetails() {
 
   const handleIncrement = () => {
     dispatch(incrementQuantity());
-    setQuantity(quantity + 1);
   };
   const handleDecrement = () => {
     dispatch(decrementQuantity());
-    if (quantity > 1) {
-      setQuantity(quantity - 1);
-    }
   };
 
   const handleAddToCart = () => {
-    dispatch(addToCart(product));
+    dispatch(addToCart(product, quantity));
     navigation("/cart");
   };
 

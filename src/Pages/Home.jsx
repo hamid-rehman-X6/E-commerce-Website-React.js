@@ -9,7 +9,8 @@ export default function Home() {
           className="Home-page-img"
           // src="https://antdisplay.com/pub/media/wysiwyg/CLOTHING_SHOP_5_.png"
           // src="https://antdisplay.com/pub/media/wysiwyg/CLOTHING_SHOP_2__1.png"
-          src="https://www.w3schools.com/w3images/jeans.jpg"
+          // src="https://www.w3schools.com/w3images/jeans.jpg"
+          src="https://img.freepik.com/free-photo/clothing-store-with-blurred-efecto_23-2148164686.jpg?size=626&ext=jpg&ga=GA1.1.1092044889.1698997650&semt=ais"
           alt="img"
         />
 
