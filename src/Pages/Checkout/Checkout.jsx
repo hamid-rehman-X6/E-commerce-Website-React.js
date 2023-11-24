@@ -1,7 +1,18 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCreditCard } from "@fortawesome/free-regular-svg-icons";
+import { useNavigate } from "react-router-dom";
+import { ResetCart } from "../../Redux/Cart-Redux/cartAction";
+import { useDispatch } from "react-redux";
 
 export default function Checkout() {
+  const dispatch = useDispatch();
+  const navigation = useNavigate("");
+
+  const handlesubmit = () => {
+    dispatch(ResetCart());
+    alert("Your Order is Submitted Successfully.");
+    navigation("/products");
+  };
   return (
     <>
       <div className="checkout-container">
@@ -13,7 +24,7 @@ export default function Checkout() {
           />
           Checkout
         </h1>
-        <form className="checkout-form">
+        <form className="checkout-form" onSubmit={handlesubmit}>
           <div className="form-group">
             <label htmlFor="cardName">Card Holder Name</label>
             <input

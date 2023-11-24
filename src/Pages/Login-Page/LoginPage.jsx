@@ -60,7 +60,7 @@ export function LoginPage() {
           className="loginpage-main-text"
           style={{ color: "#333333", marginLeft: "50px" }}
         >
-          Getting Started with Clothing Products - Login Page
+          {/* Getting Started with Clothing Products - Login Page */}
         </h1>
       </div>
 

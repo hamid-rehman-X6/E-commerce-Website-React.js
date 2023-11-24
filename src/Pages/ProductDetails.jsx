@@ -44,6 +44,7 @@ export function ProductDetails() {
 
   const handleAddToCart = () => {
     dispatch(addToCart(product, quantity));
+    console.log({ product, quantity });
     navigation("/cart");
   };
 

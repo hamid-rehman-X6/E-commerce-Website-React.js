@@ -15,26 +15,7 @@ export const productDetailReducer = (state = initialState, action) => {
       };
 
     case "ADD_TO_CART":
-      // return { ...state, cart: [...state.cart, action.payload] };
-
-      // const updatedCart1 = [...state.cart, action.payload];
-      // console.log(updatedCart1);
-      // return { ...state, cart: updatedCart1 };
-
-      const { id, quantities } = action.payload;
-      const updatedCart1 = [...state.cart];
-      const existingProductIndex = updatedCart1.findIndex(
-        (item) => item.id === id
-      );
-
-      if (existingProductIndex !== -1) {
-        // If the product already exists, update its quantity
-        updatedCart1[existingProductIndex].quantities += quantities;
-      } else {
-        // If the product is not in the cart, add it
-        updatedCart1.push(action.payload);
-      }
-
+      const updatedCart1 = [...state.cart, action.payload];
       return { ...state, cart: updatedCart1 };
 
     case "REMOVE-CART":
@@ -42,6 +23,27 @@ export const productDetailReducer = (state = initialState, action) => {
       updatedCart.splice(action.payload, 1); // Remove item at the specified index
       console.log(updatedCart);
       return { ...state, cart: updatedCart };
+
+    case "INCREMENT_CART_ITEM":
+      const itemcart1 = state.cart.map((item, index) => {
+        if (index === action.payload) {
+          return { ...item, quantities: item.quantities + 1 };
+        }
+        return item;
+      });
+      return { ...state, cart: itemcart1 };
+
+    case "DECREMENT_CART_ITEM":
+      const itemcart2 = state.cart.map((item, index) => {
+        if (index === action.payload && item.quantities > 0) {
+          return { ...item, quantities: item.quantities - 1 };
+        }
+        return item;
+      });
+      return { ...state, cart: itemcart2 };
+
+    case "RESET_CART":
+      return { ...state, cart: [] };
     default:
       return state;
   }

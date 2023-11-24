@@ -14,3 +14,16 @@ export const addToCart = (product, quantity) => ({
 export const removefromCart = () => ({
   type: "REMOVE-CART",
 });
+
+export const IncreCartitem = (index) => ({
+  type: "INCREMENT_CART_ITEM",
+  payload: index,
+});
+export const DecreCartitem = (index) => ({
+  type: "DECREMENT_CART_ITEM",
+  payload: index,
+});
+
+export const ResetCart = () => ({
+  type: "RESET_CART",
+});

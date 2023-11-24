@@ -1,13 +1,17 @@
 import React from "react";
-import { useState } from "react";
+// import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmarkCircle } from "@fortawesome/free-solid-svg-icons";
-import { removefromCart } from "../Redux/Cart-Redux/cartAction";
+import {
+  DecreCartitem,
+  IncreCartitem,
+  removefromCart,
+} from "../Redux/Cart-Redux/cartAction";
 import { Link } from "react-router-dom";
-
 export default function AddtoCart() {
   const cartItems = useSelector((state) => state.cart);
+  // const [count, setCount] = useState(0);
 
   const dispatch = useDispatch();
 
@@ -16,6 +20,14 @@ export default function AddtoCart() {
   };
 
   let totalBill = 0;
+
+  const handleIncrement = (index) => {
+    dispatch(IncreCartitem(index));
+  };
+
+  const handleDecrement = (index) => {
+    dispatch(DecreCartitem(index));
+  };
   return (
     <>
       {cartItems.length === 0 ? (
@@ -52,7 +64,23 @@ export default function AddtoCart() {
                       <img src={p.item.image} className="cart-img" />
 
                       <h3 className="cart-price"> ${p.item.price}</h3>
-                      <h3 className="cart-quantity">{p.quantities}</h3>
+
+                      <div className="cart-quantity-btns-main">
+                        <button
+                          className="cart-decrement-btn"
+                          onClick={() => handleDecrement(index)}
+                        >
+                          -
+                        </button>
+                        <h3 className="cart-quantity">{p.quantities}</h3>
+                        <button
+                          className="cart-increment-btn"
+                          onClick={() => handleIncrement(index)}
+                        >
+                          +
+                        </button>
+                      </div>
+
                       <h3 className="cart-item-bill">${totalQ}</h3>
                     </div>
                     <hr style={{ marginTop: "5px" }} />

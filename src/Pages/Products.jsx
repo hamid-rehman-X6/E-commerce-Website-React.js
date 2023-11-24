@@ -78,16 +78,27 @@ export function Products() {
   return (
     <>
       <span className="searching-text">
-        Search:{" "}
         <input
           className="input-search"
-          placeholder="Search Products..."
+          placeholder=" Search Products..."
           type="search"
           onChange={(e) => setSearch(e.target.value)}
         />
       </span>
 
       <div className="pricebtn-sorting">
+        <div class="dropdown">
+          <button class="dropbtn">Sort By</button>
+          <div class="dropdown-content">
+            <a onClick={handleLowToHigh}>Price Low To High</a>
+            <a onClick={handlesorting}>Sort A to Z</a>
+            <a onClick={handleHighToLow}>Price High To Low</a>
+            <a onClick={handleReverse}>Sort Z to A</a>
+          </div>
+        </div>
+      </div>
+
+      {/* <div className="pricebtn-sorting">
         <button className="low-high" onClick={handleLowToHigh}>
           Price Low To High
         </button>
@@ -101,21 +112,19 @@ export function Products() {
         <button className="ReverseSort-btn" onClick={handleReverse}>
           Sort Z to A
         </button>
-      </div>
+      </div> */}
 
       {loading ? (
-        <p
-          style={{
-            marginLeft: "50px",
-            fontSize: "28px",
-            fontWeight: "bolder",
-            color: "darkred",
-          }}
-        >
-          Loading Products, please wait....
-        </p>
+        // style={{
+        //   marginLeft: "50px",
+        //   fontSize: "28px",
+        //   fontWeight: "bolder",
+        //   color: "darkred",
+        // }}
+
+        <div class="loader"></div>
       ) : (
-        <h2 className="Feature-p">Featured Products</h2>
+        <h2 className="Feature-p"></h2>
       )}
 
       <div className="P-main-div">
